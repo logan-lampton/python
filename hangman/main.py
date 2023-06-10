@@ -1,103 +1,47 @@
 import random
+import hangman_art
+import hangman_words
+import os
 
-stages = [
-    """
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |
-      |
-=========
-""",
-    """
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |
-      |
-=========
-""",
-    """
-  +---+
-  |   |
-  O   |
- /|\  |
-      |
-      |
-=========
-""",
-    """
-  +---+
-  |   |
-  O   |
- /|   |
-      |
-      |
-=========""",
-    """
-  +---+
-  |   |
-  O   |
-  |   |
-      |
-      |
-=========
-""",
-    """
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-=========
-""",
-    """
-  +---+
-  |   |
-      |
-      |
-      |
-      |
-=========
-""",
-]
-
-word_list = ["aardvark", "baboon", "camel"]
-chosen_word = random.choice(word_list)
+chosen_word = random.choice(hangman_words.word_list)
 word_length = len(chosen_word)
 lives = 6
+print(hangman_art.logo)
 
-# Testing code
-print(f"Pssst, the solution is {chosen_word}.")
+end_of_game = False
 
 display = []
 for letter in range(word_length):
     display += "_"
 
-end_of_game = False
+guesses = []
 
 while not end_of_game:
     guess = input("Guess a letter: ").lower()
+    guesses.append(guess)
+
+    if guess in display:
+        print(f"You've already guessed {guess}")
 
     for position in range(word_length):
         letter = chosen_word[position]
         if letter == guess:
             display[position] = letter
 
-    if letter != guess:
+    os.system('clear')
+    print(f"You've guessed {guesses}\n")
+    print(display)
+    
+    if guess not in chosen_word:
         lives -= 1
+        print(f"Sorry, {guess} isn't in the word")
         if lives == 0:
             print("You lose.")
+            print(f"The word was: {chosen_word}")
             end_of_game = True
-
-    print(display)
 
     if "_" not in display:
         end_of_game = True
         print("You win!")
 
-    stage_index = lives
-    print(stages[stage_index])
+    print(hangman_art.stages[lives])
