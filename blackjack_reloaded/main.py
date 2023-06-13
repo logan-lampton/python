@@ -83,7 +83,7 @@ def blackjack():
     blackjack()
   # If they opt to not play
   else:
-       print("Okay, bye!")  
+       print("Okay, bye!") 
 
 # Inital call
 blackjack()
