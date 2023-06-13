@@ -9,15 +9,18 @@ def guess_the_number():
   """Number guessing game generating a number from 1 to 100. No arguments"""
   os.system('clear')
   print(art.logo)
+  print("Welcome to the guessing game!")
   # Include two different difficulty levels (e.g., 10 guesses in easy mode, only 5 guesses in hard mode).
   difficulty_mode = input("Please choice your difficulty mode: 'easy' or 'hard': ").lower()
   
-  if difficulty_mode == "easy":
-    guesses_remaining = 10
-  else:
-    guesses_remaining = 5
+  def set_difficulty():
+    if difficulty_mode == "easy":
+        guesses_remaining = 10
+    else:
+        guesses_remaining = 5
+    return guesses_remaining
   
-  answer = random.randint(1, 101)
+  answer = random.randint(1, 100)
 
   def play_again():
     """Presents option to play the game again/restarts the game. No arguments"""
@@ -47,15 +50,16 @@ def guess_the_number():
   
   guess()
   
-  while guesses_remaining > 0:
+  turns_remaining = set_difficulty()
+  while turns_remaining > 0:
     # Track the number of turns remaining.
-    guesses_remaining -= 1
-    if guesses_remaining > 0:
-      print(f"You have {guesses_remaining} guesses left. Guess again")
+    turns_remaining -= 1
+    if turns_remaining > 0:
+      print(f"You have {turns_remaining} guesses left. Guess again")
       guess()
     # If they run out of turns, provide feedback to the player.
     else:
-      print("No guesses left. You lose.")
+      print(f"No guesses left. The answer was {answer} You lose.")
       play_again()
     
 guess_the_number()
