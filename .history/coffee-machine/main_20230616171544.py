@@ -64,14 +64,8 @@ def calculate_resource_cost(flavor):
     )
     if remaining_water < 0:
         print("Sorry there is not enough water")
-        flavor = input(
-            "What would you like?: 'Espresso', 'Latte', or 'Cappuccino': "
-        ).lower()
     elif remaining_coffee < 0:
         print("Sorry there is not enough coffee")
-        flavor = input(
-            "What would you like?: 'Espresso', 'Latte', or 'Cappuccino': "
-        ).lower()
     else:
         resources["water"] = remaining_water
         resources["coffee"] = remaining_coffee
@@ -83,9 +77,6 @@ def calculate_resource_cost(flavor):
         )
         if remaining_milk < 0:
             print("Sorry there is not enough milk")
-            flavor = input(
-                "What would you like?: 'Espresso', 'Latte', or 'Cappuccino': "
-            ).lower()
         else:
             resources["milk"] = remaining_milk
     return
