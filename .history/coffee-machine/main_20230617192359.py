@@ -58,7 +58,7 @@ def make_coffee(flavor_name, flavor_ingredients):
     """Deduct the ingredients required to make the given coffee from the total resources"""
     for item in flavor_ingredients:
         resources[item] -= flavor_ingredients[item]
-    print(f"Here is your {flavor_name} ☕. Enjoy!")
+    print(f"Here is your {flavor} ☕. Enjoy!")
 
 
 def process_coins(cost):

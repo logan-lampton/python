@@ -46,35 +46,11 @@ profit = 0
 
 
 def is_resource_available(flavor_ingredients):
-    """Checks if the ingredients are available for a selected flavor"""
     for item in flavor_ingredients:
         if flavor_ingredients[item] >= resources[item]:
             print(f"Sorry there is not enough {item}")
             return False
     return True
-
-
-def make_coffee(flavor_name, flavor_ingredients):
-    """Deduct the ingredients required to make the given coffee from the total resources"""
-    for item in flavor_ingredients:
-        resources[item] -= flavor_ingredients[item]
-    print(f"Here is your {flavor_name} ☕. Enjoy!")
-
-
-def process_coins(cost):
-    """Prompts the user to pay coins for the given cost and returns their change if enough coins are provided"""
-    print(f"That will cost ${cost}0. Please insert coins.")
-    total = cost
-    for coin_type in COINS:
-        amt_coin_type = float(input(f"How many {coin_type}?: "))
-        total = float(total - COINS[coin_type] * amt_coin_type)
-        print(f"Thank you, you now owe: ${round(total, 2)}")
-    if (total) > 0:
-        print("Sorry, that's not enough money. Money refunded.")
-        return False
-    else:
-        print(f"Thanks, your change amount is ${round(float(total * -1), 2)}")
-        return True
 
 
 is_on = True
@@ -91,7 +67,23 @@ while is_on:
     else:
         drink = MENU[flavor]
         if is_resource_available(drink["ingredients"]):
+            for item in resources:
+                print(item)
+                print(resources)
+
+            # resources["water"] = remaining_water
+            # resources["coffee"] = remaining_coffee
+            # resources["milk"] = remaining_milk
             cost = drink["cost"]
-            if process_coins(cost):
+            print(f"That will cost ${cost}0. Please insert coins.")
+            total = cost
+            for coin_type in COINS:
+                amt_coin_type = float(input(f"How many {coin_type}?: "))
+                total = float(total - COINS[coin_type] * amt_coin_type)
+                print(f"Thank you, you now owe: ${round(total, 2)}")
+            if (total) > 0:
+                print("Sorry, that's not enough money. Money refunded.")
+            else:
                 profit += cost
-                make_coffee(flavor, drink["ingredients"])
+                print(f"Thanks, your change amount is ${round(float(total * -1), 2)}")
+                print(f"Here is your {flavor} ☕. Enjoy!")
