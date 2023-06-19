@@ -24,7 +24,8 @@ class QuizBrain:
         else:
             print("Sorry, you got it wrong 😟")
         print(f"The correct answer was {correct_answer}.")
-        print(f"Your score is {self.score}")
+        print(f"Your score is {self.score}/{self.question_number}")
+        print("\n")
 
 # MOCK DISPLAY
 # Q.1: A slug's blood is green. (True/False)?
