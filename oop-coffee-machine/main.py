@@ -8,8 +8,9 @@ menu = Menu()
 
 is_on = True
 while is_on:
+    options = menu.get_items()
     order = input(
-            "What would you like?: 'Espresso', 'Latte', or 'Cappuccino': "
+            f"What would you like?: ({options}): "
         ).lower()
     if order == "off":
         print("Shutting down coffee machine. Goodbye.")
