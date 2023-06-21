@@ -77,26 +77,43 @@ timmy.color("medium spring green")
 # for _ in range(200):
 #     random_walk()
 
+
 # --- spirograph ---
-colormode(255)
-def random_color():
-    red = random.randint(0, 255)
-    blue = random.randint(0, 255)
-    green = random.randint(0, 255)
-    r_color = (red, blue, green)
-    return timmy.pencolor(r_color)
+# colormode(255)
+# def random_color():
+#     red = random.randint(0, 255)
+#     blue = random.randint(0, 255)
+#     green = random.randint(0, 255)
+#     r_color = (red, blue, green)
+#     return timmy.pencolor(r_color)
+#
+# timmy.speed("fastest")
+#
+#
+# def draw_spirograph(size_of_gap):
+#     for _ in range(int(360 / size_of_gap)):
+#         random_color()
+#         timmy.circle(100)
+#         timmy.setheading(timmy.heading() + size_of_gap)
+#
+# draw_spirograph(5)
 
-timmy.speed("fastest")
-
-
-def draw_spirograph(size_of_gap):
-    for _ in range(int(360 / size_of_gap)):
-        random_color()
-        timmy.circle(100)
-        timmy.setheading(timmy.heading() + size_of_gap)
-
-draw_spirograph(5)
 
 screen = Screen()
-screen.screensize(2000, 1500)
+
+
+
+# -- event listener --
+
+def move_forwards():
+    timmy.forward(10)
+
+
+screen.listen()
+screen.onkey(key="space", fun=move_forwards)
+
+
+
+
 screen.exitonclick()
+

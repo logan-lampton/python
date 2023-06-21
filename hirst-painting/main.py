@@ -24,9 +24,11 @@ color_list = [(233, 239, 246), (246, 239, 242), (240, 246, 243), (132, 166, 205)
 # dots are spaced 50 apart
 
 hirst = Turtle()
+hirst.speed("fast")
 colormode(255)
 hirst.penup()
 hirst.goto(-240, -225)
+hirst.hideturtle()
 
 y = -225
 
@@ -38,6 +40,7 @@ for _ in range(10):
         y += 5
     hirst.setx(-240)
     hirst.sety(y)
+
 
 screen = Screen()
 screen.screensize(200000, 150000)
