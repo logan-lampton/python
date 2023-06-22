@@ -14,13 +14,11 @@ class Paddle(Turtle):
         self.shapesize(stretch_wid=5, stretch_len=1)
 
     def up(self):
-        if self.ycor() < 240:
-            new_y = self.ycor() + 121
+        if self.ycor() < 230:
+            new_y = self.ycor() + 50
             self.sety(new_y)
-            screen.update()
 
     def down(self):
-        if self.ycor() > -240:
-            new_y = self.ycor() - 121
+        if self.ycor() > -230:
+            new_y = self.ycor() - 50
             self.sety(new_y)
-            screen.update()
