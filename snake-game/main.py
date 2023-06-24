@@ -29,7 +29,6 @@ screen.onkey(fun=snake.move_right, key="Right")
 
 # Move the snake
 game_is_on = True
-
 while game_is_on:
     screen.update()
     time.sleep(0.1)
@@ -42,12 +41,13 @@ while game_is_on:
         snake.extend()
     # Detect collision with wall
     if snake.head.xcor() >= 335 or snake.head.xcor() <= -335 or snake.head.ycor() >= 335 or snake.head.ycor() <= -335:
-        game_is_on = False
-        scoreboard.game_over()
+        scoreboard.reset()
+        snake.reset()
     # Detect collision with tail
     for segment in snake.segments[1:]:
         if snake.head.distance(segment) < 10:
-            game_is_on = False
-            scoreboard.game_over()
+            scoreboard.reset()
+            snake.reset()
+
 
 screen.exitonclick()

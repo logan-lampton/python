@@ -9,8 +9,9 @@ RIGHT = 0
 
 STARTING_POSITIONS = [(0, 0), (-20, 0), (-40, 0)]
 
-class Snake:
+class Snake(Turtle):
     def __init__(self):
+        super().__init__()
         self.segments = []
         self.create_snake()
         self.head = self.segments[0]
@@ -54,3 +55,10 @@ class Snake:
     def move_right(self):
         if self.head.heading() != LEFT:
             self.head.setheading(RIGHT)
+
+    def reset(self):
+        for segment in self.segments:
+            segment.hideturtle()
+        self.segments.clear()
+        self.create_snake()
+        self.head = self.segments[0]
