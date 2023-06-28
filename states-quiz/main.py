@@ -27,14 +27,11 @@ playing = True
 while playing:
     user_answer = string.capwords(screen.textinput(title=f"{correct}/50 states correct",
                                                    prompt="What's another state name?"))
-
     if user_answer == "Exit":
-        missing_states = []
-        for state in data.state:
-            if state not in guessed_states:
-                missing_states.append(state)
+        # new_list = [new_item for item in list if test]
+        missing_states = [state for state in data.state if state not in guessed_states]
         new_data = pd.DataFrame(missing_states)
-        new_data.to_csv("states.learn.csv")
+        new_data.to_csv("states_to_learn.csv")
         break
     for state in data.state:
         if state == user_answer:
