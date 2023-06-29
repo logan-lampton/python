@@ -10,14 +10,46 @@ FONT_NAME = "Courier"
 WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
+reps = 0
+checkmarks = 0
+count_down_time = None
 
 # ---------------------------- TIMER RESET ------------------------------- #
+
+
+def reset():
+    global reps, checkmarks
+    window.after_cancel(count_down_time)
+    title_label.config(text="Timer", fg=GREEN)
+    canvas.itemconfig(timer_text, text="00:00")
+    reps = 0
+    checkmarks = 0
+    checkmark_label.config(text="")
+
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 
 
 def start_timer():
-    count_down(WORK_MIN * 60)
+    global reps, checkmarks
+    reps += 1
+    individual_checkmark = "✔"
+    checkmark_label.config(text=f"{individual_checkmark}" * checkmarks)
+    print(reps)
+    work_time = WORK_MIN * 60
+    short_break = SHORT_BREAK_MIN * 60
+    long_break = LONG_BREAK_MIN * 60
+    if reps % 8 == 0:
+        title_label.config(text="Long Break!", fg=RED)
+        checkmarks = 0
+        count_down(long_break)
+    elif reps % 2 != 0:
+        title_label.config(text="Work", fg=GREEN)
+        checkmarks += 1
+        count_down(work_time)
+    elif reps % 2 == 0:
+        title_label.config(text="Break", fg=PINK)
+        count_down(short_break)
 
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
@@ -29,8 +61,10 @@ def count_down(count):
     if count_seconds < 10:
         canvas.itemconfig(timer_text, text=f"{count_minutes}:0{count_seconds}")
     if count > 0:
-        window.after(1000, count_down, count - 1)
-
+        global count_down_time
+        count_down_time = window.after(1000, count_down, count - 1)
+    else:
+        start_timer()
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -48,13 +82,13 @@ canvas.grid(column=1, row=1)
 title_label = Label(text="Timer", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 45, "bold"))
 title_label.grid(column=1, row=0)
 
-checkmark_label = Label(text="✔", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 20, "bold"))
+checkmark_label = Label(text="", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 20, "bold"))
 checkmark_label.grid(column=1, row=3)
 
 start_btn = Button(text="Start", font=(FONT_NAME, 10), highlightthickness=0, command=start_timer)
 start_btn.grid(column=0, row=2)
 
-reset_btn = Button(text="Reset", font=(FONT_NAME, 10), highlightthickness=0)
+reset_btn = Button(text="Reset", font=(FONT_NAME, 10), highlightthickness=0, command=reset)
 reset_btn.grid(column=2, row=2)
 
 window.mainloop()
