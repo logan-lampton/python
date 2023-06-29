@@ -29,7 +29,7 @@ def button_click():
     if miles_input.get() == "":
         output_km.config(text=0)
     else:
-        m_to_km = round(int(miles_input.get()) * 1.609344, 2)
+        m_to_km = round(float(miles_input.get()) * 1.609344, 2)
         output_km.config(text=m_to_km)
 
 
