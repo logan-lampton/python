@@ -12,7 +12,8 @@ SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
 checkmarks = 0
-count_down_time = None
+# count_down_time = WORK_MIN * 60
+# pause = False
 
 # ---------------------------- TIMER RESET ------------------------------- #
 
@@ -35,7 +36,7 @@ def start_timer():
     reps += 1
     individual_checkmark = "✔"
     checkmark_label.config(text=f"{individual_checkmark}" * checkmarks)
-    print(reps)
+    # print(reps)
     work_time = WORK_MIN * 60
     short_break = SHORT_BREAK_MIN * 60
     long_break = LONG_BREAK_MIN * 60
@@ -66,6 +67,18 @@ def count_down(count):
     else:
         start_timer()
 
+# ---------------------------- PAUSE ------------------------------- #
+# def pause():
+#     global pause, count_down_time, type_of_rep
+#     if pause == True:
+#         start_timer(count_down_time)
+#         pause = False
+#     else:
+#         window.after_cancel(count_down_time)
+#         pause = True
+
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 
@@ -90,5 +103,9 @@ start_btn.grid(column=0, row=2)
 
 reset_btn = Button(text="Reset", font=(FONT_NAME, 10), highlightthickness=0, command=reset)
 reset_btn.grid(column=2, row=2)
+
+# pause_btn = Button(text="Pause", font=(FONT_NAME, 10), highlightthickness=0, command=pause)
+# pause_btn.grid(column=1, row=4)
+
 
 window.mainloop()
