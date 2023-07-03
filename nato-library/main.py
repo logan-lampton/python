@@ -37,10 +37,20 @@ phonetic_dictionary = {row.letter: row.code for (index, row) in data.iterrows()}
 #TODO 2. Create a list of the phonetic code words from a word that the user inputs.
 
 print("Let's turn any word into the NATO phonetic alphabet!")
-user_word = input("Provide a word: ").upper()
+
+def provide_word():
+    user_word = input("Provide a word: ").upper()
+    try:
+        output_list = [phonetic_dictionary[letter] for letter in user_word]
+    except KeyError:
+        print("Please only use letters from the alphabet")
+        provide_word()
+    else:
+        print(output_list)
+
+provide_word()
 
 # for letter in user_word:
 #     print(phonetic_dictionary[letter])
 
-output = [phonetic_dictionary[letter] for letter in user_word]
-print(output)
+
