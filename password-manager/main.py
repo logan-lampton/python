@@ -44,7 +44,6 @@ def save():
             "password": password_value,
         }
     }
-    print(new_data)
     if len(website_value) == 0 or len(email_value) == 0 or len(password_value) == 0:
         messagebox.showinfo(title="Oops!", message="Please provide values for the website, email, and password")
     else:
@@ -68,6 +67,23 @@ def save():
 
 # Ex: Amazon | logan.dummyemail@email.com | qw3252345
 
+# ---------------------------- SEARCH ------------------------------- #
+
+def find_password():
+    website_value = website_input.get()
+    try:
+        with open("passwordfile.json", "r") as data_file:
+            data = json.load(data_file)
+            website_directory = [d1 for d1, d2 in data.items()]
+            if website_value in website_directory:
+                messagebox.showinfo(title="Saved Password", message=f"Website:{website_value}\nPassword: {data[website_value]['password']}")
+            else:
+                messagebox.showinfo(title="Not Found",
+                                    message=f"{website_value} not found. Please create a new password.")
+    except FileNotFoundError:
+        messagebox.showinfo(title="No Passwords Saved Yet",
+                            message="No passwords yet to search, please make your first one to create the data file.")
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -88,26 +104,28 @@ email_label.grid(column=0, row=2, padx=10)
 password_label = Label(text="Password:")
 password_label.grid(column=0, row=3)
 
-website_input = Entry(width=35)
+website_input = Entry(width=32)
 website_input.grid(column=1, columnspan=2, row=1, sticky="W")
 website_input.focus()
 
-email_input = Entry(width=35)
+email_input = Entry(width=32)
 email_input.grid(column=1, columnspan=2, row=2, sticky="W")
 email_input.insert(0, "logan.dummyemail@email.com")
 
-password_input = Entry(width=35)
+password_input = Entry(width=32)
 password_input.grid(column=1, columnspan=2, row=3, sticky="W")
 
-generate_btn = Button(text="Generate Password", width=30, command=generate_password)
-generate_btn.grid(column=1, columnspan=2, row=4, sticky="W")
+search_btn = Button(text="Search", width=20, command=find_password)
+search_btn.grid(column=2, row=1, sticky="W")
 
-add_btn = Button(text="Add", width=30, command=save)
+generate_btn = Button(text="Generate Password", width=20, command=generate_password)
+generate_btn.grid(column=2, row=3, sticky="W")
+
+add_btn = Button(text="Add", width=27, command=save)
 add_btn.grid(column=1, columnspan=2, row=5, sticky="W")
 
-add_padding = Label(text="", width=18)
-add_padding.grid(column=2, row=4)
-
+add_padding = Label(text="", width=25)
+add_padding.grid(column=2, row=6)
 
 # grid(row=2, column=0, columnspan=2)
 
