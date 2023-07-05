@@ -76,7 +76,9 @@ def find_password():
             data = json.load(data_file)
             website_directory = [d1 for d1, d2 in data.items()]
             if website_value in website_directory:
-                messagebox.showinfo(title="Saved Password", message=f"Website:{website_value}\nPassword: {data[website_value]['password']}")
+                messagebox.showinfo(title="Saved Password", message=f"Website:{website_value}"
+                                                                    f"\nEmail: {data[website_value]['email']}"
+                                                                    f"\nPassword: {data[website_value]['password']}")
             else:
                 messagebox.showinfo(title="Not Found",
                                     message=f"{website_value} not found. Please create a new password.")
