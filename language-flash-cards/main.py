@@ -19,7 +19,12 @@ def next_card():
     current_card = choice(word_data)
     while current_card == initial_choice:
         current_card = choice(word_data)
-    word_label.config(text=current_card["French"])
+    canvas.itemconfig(word_text, text=current_card["French"])
+
+
+# ---------------------------- FLIP FLASH CARDS ------------------------------------- #
+
+
 
 
 # ---------------------------- UI SETUP --------------------------------------------- #
@@ -31,18 +36,18 @@ window.config(padx=50, pady=50, background=BACKGROUND_COLOR)
 window.title("Language Flash Cards")
 
 # Card
-frame = Frame(width=800, height=526)
-frame.grid(column=0, columnspan=2, row=0)
+
+canvas = Canvas(width=800, height=526, bg=BACKGROUND_COLOR, highlightthickness=0)
+canvas.grid(column=0, columnspan=2, row=0)
 
 card_front = PhotoImage(file="images/card_front.png")
-front_card = Label(frame, image=card_front, background=BACKGROUND_COLOR)
-front_card.grid(column=0, row=0)
+canvas_image = canvas.create_image(400, 263, image=card_front)
 
-language_label = Label(frame, text=current_language, background="white", font=("Ariel", 40, "italic"))
-language_label.place(x=250, y=100)
+card_back = PhotoImage(file="images/card_back.png")
 
-word_label = Label(frame, text=initial_word, background="white", font=("Ariel", 60, "bold"))
-word_label.place(x=250, y=223)
+language_text = canvas.create_text(400, 150, text=current_language, font=("Ariel", 40, "italic"))
+
+word_text = canvas.create_text(400, 263, text=initial_word, font=("Ariel", 60, "bold"))
 
 # Buttons
 wrong_img = PhotoImage(file="images/wrong.png")
