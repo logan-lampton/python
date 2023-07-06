@@ -74,17 +74,18 @@ def find_password():
     try:
         with open("passwordfile.json", "r") as data_file:
             data = json.load(data_file)
-            website_directory = [d1 for d1, d2 in data.items()]
-            if website_value in website_directory:
-                messagebox.showinfo(title="Saved Password", message=f"Website:{website_value}"
-                                                                    f"\nEmail: {data[website_value]['email']}"
-                                                                    f"\nPassword: {data[website_value]['password']}")
-            else:
-                messagebox.showinfo(title="Not Found",
-                                    message=f"{website_value} not found. Please create a new password.")
     except FileNotFoundError:
         messagebox.showinfo(title="No Passwords Saved Yet",
                             message="No passwords yet to search, please make your first one to create the data file.")
+    else:
+        website_directory = [d1 for d1, d2 in data.items()]
+        if website_value in website_directory:
+            messagebox.showinfo(title="Saved Password", message=f"Website: {website_value}"
+                                                                f"\nEmail: {data[website_value]['email']}"
+                                                                f"\nPassword: {data[website_value]['password']}")
+        else:
+            messagebox.showinfo(title="Not Found",
+                                message=f"{website_value} not found. Please create a new password.")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
