@@ -17,6 +17,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\language-flash-cards\data\words_to_learn.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\language-flash-cards\words_to_learn.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\nato-library\nato_phonetic_alphabet.csv">
           <value>
             <Attribute>
