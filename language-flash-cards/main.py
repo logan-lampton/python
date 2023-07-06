@@ -2,6 +2,7 @@ import random
 from tkinter import *
 import pandas as pd
 from random import *
+import os
 
 # ---------------------------- DATA FOR FLASH CARDS --------------------------------- #
 
@@ -13,6 +14,19 @@ except FileNotFoundError:
 
 word_data = data.to_dict(orient="records")
 current_card = {}
+
+# --------------------------------- RESET DATA -------------------------------------- #
+
+
+def reset_data():
+    global data
+    try:
+        os.remove("data/words_to_learn.csv")
+    except FileNotFoundError:
+        pass
+    data = pd.read_csv("data/french_words.csv")
+    get_next_card()
+
 
 # ---------------------------- CREATE NEW FLASH CARDS ------------------------------- #
 
@@ -68,7 +82,7 @@ flip_timer = window.after(3000, card_flip)
 
 # Card
 canvas = Canvas(width=800, height=526, bg=BACKGROUND_COLOR, highlightthickness=0)
-canvas.grid(column=0, columnspan=2, row=0)
+canvas.grid(column=0, columnspan=3, row=0)
 
 card_front = PhotoImage(file="images/card_front.png")
 canvas_image = canvas.create_image(400, 263, image=card_front)
@@ -86,7 +100,11 @@ wrong_button.grid(column=0, row=1)
 
 checkmark_img = PhotoImage(file="images/right.png")
 right_button = Button(image=checkmark_img, highlightthickness=0, command=is_known)
-right_button.grid(column=1, row=1)
+right_button.grid(column=2, row=1)
+
+reset_button = Button(text="Reset", fg="white", font=("Ariel", 20), highlightthickness=0, background="#7fb599",
+                      command=reset_data)
+reset_button.grid(column=1, row=1)
 
 # initial call to populate first card
 get_next_card()
