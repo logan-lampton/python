@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\auto-birthday-wisher\birthdays.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\language-flash-cards\data\french_words.csv">
           <value>
             <Attribute>
