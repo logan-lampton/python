@@ -1,13 +1,25 @@
 import smtplib
+import sys
 
-my_email = "dummyemail@gmail.com"
-password = "dummypassword321"
-connection = smtplib.SMTP("smtp.gmail.com")
-second_email = "dummyemail@yahoo.com"
+# importing emails and passwords to avoid putting them directly in the file
+sys.path.insert(1, '//wsl$/Ubuntu/home/logan/Development/code/passwords/')
+import googlesmtp
 
-connection.starttls()
+# variables for emails and password
+my_email = googlesmtp.passwords('gmail')
+password = googlesmtp.passwords('gmail_password')
+second_email = googlesmtp.passwords('yahoo')
 
-connection.login(user=my_email, password=password)
-connection.sendmail(from_addr=my_email, to_addrs=second_email, msg="Hello")
-connection.close()
+# SMTP establishing connection and set up to close after running using the with keyword
+with smtplib.SMTP("smtp.gmail.com") as connection:
+    connection.starttls()
+    # login to email
+    connection.login(user=my_email, password=password)
 
+    # who the email is from/to; the subject and body of the email
+    connection.sendmail(
+        from_addr=my_email,
+        to_addrs=second_email,
+        msg="Subject:Hello\n\n "
+            "This is the body of my awesome email."
+    )
