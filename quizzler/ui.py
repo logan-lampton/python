@@ -35,8 +35,15 @@ class QuizInterface:
         self.canvas.itemconfig(self.q_text, text=next_q_text)
 
     def select_true(self):
+        self.quiz.check_answer("True")
+        self.keep_score()
         self.get_next_question()
 
     def select_false(self):
+        self.quiz.check_answer("False")
+        self.keep_score()
         self.get_next_question()
+
+    def keep_score(self):
+        self.score_label.config(text=f"Score: {self.quiz.score}")
 
