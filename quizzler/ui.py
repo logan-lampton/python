@@ -31,19 +31,36 @@ class QuizInterface:
         self.window.mainloop()
 
     def get_next_question(self):
-        next_q_text = self.quiz.next_question()
-        self.canvas.itemconfig(self.q_text, text=next_q_text)
+        self.keep_score()
+        self.canvas.config(bg="white")
+        if self.quiz.still_has_questions():
+            next_q_text = self.quiz.next_question()
+            self.canvas.itemconfig(self.q_text, text=next_q_text)
+        else:
+            self.canvas.itemconfig(
+                self.q_text,
+                text=f"Final Results:\n\n {self.quiz.score} / {len(self.quiz.question_list)}"
+            )
+            self.true_button.config(state="disabled")
+            self.false_button.config(state="disabled")
 
     def select_true(self):
-        self.quiz.check_answer("True")
-        self.keep_score()
-        self.get_next_question()
+        is_right = self.quiz.check_answer("True")
+        self.give_feedback(is_right)
 
     def select_false(self):
-        self.quiz.check_answer("False")
-        self.keep_score()
-        self.get_next_question()
+        is_right = self.quiz.check_answer("False")
+        self.give_feedback(is_right)
+
+    def give_feedback(self, is_right):
+        if is_right:
+            self.canvas.config(bg="green")
+            print(is_right)
+        else:
+            self.canvas.config(bg="red")
+            print(is_right)
+        self.window.after(1000, self.get_next_question)
 
     def keep_score(self):
-        self.score_label.config(text=f"Score: {self.quiz.score}")
+        self.score_label.config(text=f"Score: {self.quiz.score} / {len(self.quiz.question_list)}")
 
