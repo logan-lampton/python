@@ -4,7 +4,6 @@ from quiz_brain import QuizBrain
 from ui import QuizInterface
 
 question_bank = []
-ui = QuizInterface()
 
 for question in question_data:
     question_text = question["question"]
@@ -13,6 +12,7 @@ for question in question_data:
     question_bank.append(new_question)
 
 quiz = QuizBrain(question_bank)
+ui = QuizInterface(quiz)
 
 while quiz.still_has_questions():
     quiz.next_question()
