@@ -5,7 +5,7 @@ import datetime as dt
 import random
 
 # # importing emails and passwords to avoid putting them directly in the file
-sys.path.insert(1, '//wsl$/Ubuntu/home/logan/Development/code/passwords/')
+sys.path.insert(1, '//wsl$/Ubuntu/home/logan/Development/code/passwords')
 import googlesmtp
 
 # variables for emails and password
