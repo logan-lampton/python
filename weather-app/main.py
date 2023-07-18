@@ -23,4 +23,22 @@ five_day_response.raise_for_status()
 
 five_day_data = five_day_response.json()
 
+
+def bring_umbrella():
+    weather_ids = []
+    # grab the first 4 entries, to simulate 12 hours (as each entry is for 3 hours)
+    for entry in five_day_data["list"][:4]:
+        for weather_condition in entry["weather"]:
+            weather_id = weather_condition["id"]
+            # weather ids for rainy weather are less than 600, but also accounts for sleet in the 600s
+            if 602 < weather_id < 620 or weather_id < 600:
+                weather_ids.append(weather_id)
+    # if any rainy weather is true, then returns that we should bring an umbrella
+    if weather_ids:
+        return "Bring an umbrella today"
+
+
 print(five_day_data)
+
+
+print(bring_umbrella())
