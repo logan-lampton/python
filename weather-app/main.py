@@ -1,10 +1,16 @@
 import requests
 import sys
+from twilio.rest import Client
 
 # # importing api key to avoid putting them directly in the file
 sys.path.insert(1, '//wsl$/Ubuntu/home/logan/Development/code/passwords')
 import open_weather_api
-api_key = open_weather_api.api_key()
+
+api_key = open_weather_api.keys("api")
+account_sid = open_weather_api.keys("account_sid")
+auth_token = open_weather_api.keys("auth_token")
+twilio_number = open_weather_api.keys("twilio_number")
+my_number = open_weather_api.keys("my_number")
 
 # nyc_response = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q=New%20York&appid={api_key}")
 
@@ -35,10 +41,15 @@ def bring_umbrella():
                 weather_ids.append(weather_id)
     # if any rainy weather is true, then returns that we should bring an umbrella
     if weather_ids:
-        return "Bring an umbrella today"
+        # setting up SMS alert via Twilio
+        client = Client(account_sid, auth_token)
+
+        message = client.messages.create(
+            from_=twilio_number,
+            body='Bring an umbrella today!',
+            to=my_number
+        )
 
 
-print(five_day_data)
+bring_umbrella()
 
-
-print(bring_umbrella())
