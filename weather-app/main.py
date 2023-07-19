@@ -46,9 +46,10 @@ def bring_umbrella():
 
         message = client.messages.create(
             from_=twilio_number,
-            body='Bring an umbrella today!',
+            body="It's going to rain today. Remember to bring an umbrella! ☔",
             to=my_number
         )
+        print(message.status)
 
 
 bring_umbrella()
