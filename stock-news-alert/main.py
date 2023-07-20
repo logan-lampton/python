@@ -1,6 +1,7 @@
 import requests
 import sys
 import datetime
+from twilio.rest import Client
 
 STOCK = "TSLA"
 COMPANY_NAME = "Tesla Inc"
@@ -46,48 +47,57 @@ def get_stocks():
     else:
         change = "🔻"
     change_percent = round(change_in_stock / float(two_days_ago_stock["1. open"]), 2)
-    print(f"TSLA {change} {change_percent}%: ${round(change_in_stock, 2)}")
+    # to tell if API call is working:
+    stock_print = f"TSLA {change} {change_percent}%: ${round(change_in_stock, 2)}"
+    print(stock_print)
+
+    ## STEP 2: Use https://newsapi.org
+    # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME.
     if change_percent >= five_percent:
-        get_news()
+        news_endpoint = "https://newsapi.org/v2/everything?"
+        parameters = {
+            "apiKey": stock_news_alert_api.keys("news_api"),
+            "q": "Tesla"
+        }
+        news_response = requests.get(news_endpoint, params=parameters)
+        news_response.raise_for_status()
+        news_data = news_response.json()
+        articles = news_data["articles"]
+        unique_articles = {}
+        for article in articles:
+            source_name = article["source"]["name"]
+            if source_name not in unique_articles:
+                unique_articles[source_name] = article
+        # Method to get the top 3 stories
+        # Convert the dictionary to a list of tuples (source_name, article)
+        article_list = list(unique_articles.items())
+        # Print the first three elements (source_name, article) using slicing
+        top_three_articles = article_list[:3]
+
+        ## STEP 3: Use https://www.twilio.com
+        # Send a separate message with the percentage change and each article's title and description to your phone number.
+        account_sid = stock_news_alert_api.keys("twilio_account_sid")
+        auth_token = stock_news_alert_api.keys("twilio_auth_token")
+        client = Client(account_sid, auth_token)
+
+        # format the message for twilio
+        body = f"TSLA {change} {change_percent}%: ${round(change_in_stock, 2)}\n"
+        for article in top_three_articles:
+            outlet = article[0]
+            headline = article[1]["title"]
+            brief = article[1]["description"]
+
+            body += f"{outlet} - Headline: {headline}\nBrief: {brief}\n",
+
+        message = client.messages.create(
+          from_=stock_news_alert_api.keys("twilio_number"),
+          body=body,
+          to=stock_news_alert_api.keys("my_number")
+        )
+        print(message.sid)
 
 
 get_stocks()
-
-
-## STEP 2: Use https://newsapi.org
-# Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME.
-def get_news():
-    news_endpoint = "https://newsapi.org/v2/everything?"
-    parameters = {
-        "apiKey": stock_news_alert_api.keys("news_api"),
-        "q": "Tesla"
-    }
-    news_response = requests.get(news_endpoint, params=parameters)
-    news_response.raise_for_status()
-    news_data = news_response.json()
-    articles = news_data["articles"]
-    unique_articles = {}
-    for article in articles:
-        source_name = article["source"]["name"]
-        if source_name not in unique_articles:
-            unique_articles[source_name] = article
-    # Method to get the top 3 stories
-    # Convert the dictionary to a list of tuples (source_name, article)
-    article_list = list(unique_articles.items())
-    # Print the first three elements (source_name, article) using slicing
-    top_three_articles = article_list[:3]
-    for article in top_three_articles:
-        outlet = article[0]
-        headline = article[1]["title"]
-        brief = article[1]["description"]
-        print(f"{outlet} - Headline: {headline}\nBrief: {brief}")
-
-
-get_news()
-
-## STEP 3: Use https://www.twilio.com
-# Send a separate message with the percentage change and each article's title and description to your phone number.
-
 
 
 #Optional: Format the SMS message like this:
