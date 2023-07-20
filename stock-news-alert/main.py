@@ -84,10 +84,10 @@ def get_stocks():
         body = f"TSLA {change} {change_percent}%: ${round(change_in_stock, 2)}\n"
         for article in top_three_articles:
             outlet = article[0]
-            headline = article[1]["title"]
-            brief = article[1]["description"]
+            headline = article[1]['title']
+            brief = article[1]['description']
 
-            body += f"{outlet} - Headline: {headline}\nBrief: {brief}\n",
+            body += f"{outlet} - Headline: {headline}\nBrief: {brief}\n"
 
         message = client.messages.create(
           from_=stock_news_alert_api.keys("twilio_number"),
