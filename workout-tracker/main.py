@@ -1,10 +1,14 @@
 import os
+import sys
 import requests
 from datetime import datetime
 from requests.auth import HTTPBasicAuth
 
+sys.path.insert(1, '//wsl$/Ubuntu/home/logan/Development/code/passwords')
+import work_out_tracker
+
 APP_KEY = os.environ["MY_APP_ID"]
-API_KEY = os.environ["API_KEY"]
+API_KEY = work_out_tracker.keys("api")
 USERNAME = os.environ["USERNAME"]
 PASSWORD = os.environ["PASSWORD"]
 
