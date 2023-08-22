@@ -39,7 +39,7 @@ class FlightSearch:
                 "nights_in_dst_to": 28,
                 "flight_type": "round",
                 "one_for_city": 1,
-                "max_stopovers": 0,
+                "max_stopovers": 2,
                 "curr": "USD"
             }
             response = requests.get(url=f"{endpoint}/v2/search", headers=headers, params=query)
@@ -58,7 +58,9 @@ class FlightSearch:
                 destination_airport_code=data["route"][0]["flyTo"],
                 destination_city=data["route"][0]["cityTo"],
                 depart_date=data["route"][0]["local_departure"].split("T")[0],
-                return_date=data["route"][1]["local_departure"].split("T")[0]
+                return_date=data["route"][1]["local_departure"].split("T")[0],
+                stop_overs=1,
+                via_city=data["route"][0]["cityTo"]
             )
             print(f"{flight_data.destination_city}: ${flight_data.price}")
             return flight_data

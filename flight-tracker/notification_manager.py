@@ -1,6 +1,8 @@
 from twilio.rest import Client
 import sys
 
+EMAIL_PROVIDER_SMTP_ADDRESS = "smtp.gmail.com"
+
 sys.path.insert(1, '//wsl$/Ubuntu/home/logan/Development/code/passwords')
 import flight_tracker
 
